@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from system import models
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from system.forms import TaskForm, CommentForm
 
 
@@ -28,4 +28,12 @@ class CommentCreateView(CreateView):
     template_name = "comment.html"
     form_class = CommentForm
     success_url = reverse_lazy("system:comments")
+    
+    def form_valid(self, form):
+        form.instance.task_id = self.kwargs['pk']
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('task_detail', kwargs={'pk': self.kwargs['pk']})
 # Create your views here.
