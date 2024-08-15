@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   
+    <div class="container mt-3">
+        <h2>Projects</h2>
+
+        <a href="{% url 'system:project-create' %}" type="button" class="btn btn-info">Create new project</a>
+        <p></p>
+
+        <ul class="list-group">
+            {% for project in projects %}
+            <li class="list-group-item">
+                <a href="{% url "system:project-detail" project.pk%}" type="button" class="btn btn-light">{{ project.title }}</a> 
+                <span class="badge text-bg-primary">{{ project.status }}</span>
+            </li>
+            
+            {% empty %}
+            <li class="list-group-item">Projects not found. </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

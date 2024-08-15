@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 class Project(models.Model):
     
     STATUS_CHOICES_P = [
-        ("active", "Active"),
-        ("inactive", "Inactive"),
-        ("archived", "Archived"),
+        ("Active", "active"),
+        ("Inactive", "inactive"),
+        ("Archived", "archived"),
     ]
     
     title = models.CharField(max_length=200)
@@ -24,17 +24,17 @@ class Project(models.Model):
 class Task(models.Model):
     
     STATUS_CHOICES = [
-        ("todo", "To Do"),
-        ("in_progress", "In Progress"),
-        ("done", "Done"),
-        ("ideas", "Ideas"),
+        ("To-Do", "todo"),
+        ("In Progress", "in_progress"),
+        ("Done", "done"),
+        ("Ideas", "ideas"),
     ]
     
     PRIORITY_CHOICES = [
-        ("low", "Low"),
-        ("medium", "Medium"),
-        ("high", "High"),
-        ("gd", "God Dammit"),#why not ;)
+        ("Low", "low"),
+        ("Medium", "medium"),
+        ("High", "high"),
+        ("God Dammit", "gd"),  # why not ;) 
     ]
     
     title = models.CharField(max_length=256)
