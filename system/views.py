@@ -8,6 +8,12 @@ from system.mixins import UserIsOwnerMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
+def homepage(request):
+    return render(request, 'home.html')
+
+def learn_more(request):
+    return render(request, 'learn_more.html')
+
 class ProjectListView(ListView):
     
     model = models.Project
