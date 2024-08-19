@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.urls import reverse_lazy
 from system import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
@@ -8,6 +8,49 @@ from system.mixins import UserIsOwnerMixin, UserIsOwnerProjectMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+from .forms import LoginForm, SignupForm
+
+class LoginView(View):
+    template_name = 'login.html'
+    form_class = LoginForm
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('system:task-list')  
+            else:
+                form.add_error(None, 'Invalid username or password')
+        return render(request, self.template_name, {'form': form})
+
+class SignupView(View):
+    template_name = 'signup.html'
+    form_class = SignupForm
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return redirect('system:task-list')  
+        return render(request, self.template_name, {'form': form})
 
 class HomepageView(TemplateView):
     template_name = 'home.html'

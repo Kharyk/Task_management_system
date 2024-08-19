@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: ##03c5ec;
+            background-color: #CCEFF6;
             color: #333;
             display: flex;
             justify-content: center;
@@ -112,12 +112,12 @@
             <div>
                 <p><strong>TaskMaster</strong></p>
             </div>
-            <button>Get Started</button>
+            <button onclick="location.href='{% url 'system:login' %}'" class="btn">Log in</button>
         </nav>
         <h1>Conquer Your Chaos!</h1>
         <p>Say goodbye to the madness and hello to a life of organized bliss. Whether you're juggling classes or drowning in deadlines, we've got your back!</p>
         <div class="buttons">
-            <button>Start Organizing</button>
+            <button onclick="location.href='{% url 'system:signup' %}'" class="btn">Sign Up</button>
             <button onclick="location.href='{% url 'system:learn-more' %}'" class="btn">Learn More</button>
         </div>
     </div>

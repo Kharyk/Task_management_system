@@ -4,6 +4,8 @@ from .views import HomepageView, LearnMoreView, ContactView
 
 urlpatterns = [
     path('', HomepageView.as_view(), name='home'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('signup/', views.SignupView.as_view(), name='signup'),
     path('learn-more/', LearnMoreView.as_view(), name='learn-more'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('tasks/', views.TaskListView.as_view(), name="task-list"),
