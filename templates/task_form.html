@@ -5,11 +5,25 @@
     <div class="container mt-3">
         <h2>Create new</h2>
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Save</button>
-        </form>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="alert alert-danger">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

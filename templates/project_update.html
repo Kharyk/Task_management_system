@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
     <div class="container mt-3">
-        <h2>Create new</h2>
+        <h1>{{ project.title }}</h1>
 
         <div class="card shadow-sm">
             <div class="card-body">
@@ -19,7 +18,7 @@
                         </div>
                     {% endfor %}
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="submit" class="btn btn-sm btn-success">Update</button>
                     </div>
                 </form>
             </div>

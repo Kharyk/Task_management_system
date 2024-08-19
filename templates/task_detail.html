@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mt-3">
-        <h2>{{ task.title }}</h2>
-
-        <p>{{ task.description }}</p>
-
-        <p>Status: <span class="badge text-bg-primary">{{ task.status }}</span></p>
-        <p>Priority: <span class="badge text-bg-secondary">{{ task.priority }}</span></p>
-
-        <a href="{% url "system:comments"%}" class="btn btn-success">Add a comment</a>
-        <br/>
-        <br/>
-        <a href="{% url "system:task-update" task.id%}" class="btn btn-warning">Edit</a>
-        <a href="{% url "system:task-delete" task.id%}" class="btn btn-danger">Delete</a> 
-
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="mb-0">{{ task.title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">{{ task.description }}</p>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p class="mb-0">Status:</p>
+                                <span class="badge text-bg-primary text-wrap" style="width: 5rem;">{{ task.status }}</span>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-0">Priority:</p>
+                                <span class="badge text-bg-primary text-wrap" style="width: 5rem;">{{ task.priority }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url "system:comments"%}" class="btn btn-sm btn-success">Add a comment</a>
+                            <div class="btn-group">
+                                <a href="{% url "system:task-update" task.id%}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{% url "system:task-delete" task.id%}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

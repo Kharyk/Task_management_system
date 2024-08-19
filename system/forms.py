@@ -17,11 +17,17 @@ class ProjectForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ('title', 'description', 'image', 'link', 'status', "user")
+        fields = ['title', 'description', 'image', 'link', 'status', "user"]
+        
+class ProjectUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'image', 'link', 'status']
         
 class TaskUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'priority', 'image', 'link']
+        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date']
         

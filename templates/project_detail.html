@@ -20,7 +20,7 @@
 
         <br/>
         <br/>
-        <a href="#" class="btn btn-warning">Edit</a>
-        <a href="#" class="btn btn-danger">Delete</a> 
+        <a href="{% url "system:project-update" project.id%}" class="btn btn-warning">Edit</a>
+        <a href="{% url "system:project-delete" project.id%}" class="btn btn-danger">Delete</a> 
     </div>
 {% endblock %}

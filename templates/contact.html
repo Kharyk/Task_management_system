@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section>
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2l3.59 7.59-1.41 1.41L12 10l-6.59 6.59L7 18.59l7.59-3.59-1.41-1.41z"/>
+            </svg>
+            <h1>Contact Us - TaskMaster</h1>
+        </div>
+        <p>Have a question or need help with your tasks? We're here to assist you!</p>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required></br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required></br>
+
+            <label for="subject">Subject:</label>
+            <select id="subject" name="subject" required>
+                <option value="">Select a subject</option>
+                <option value="general_inquiry">General Inquiry</option>
+                <option value="task_issue">Task Issue</option>
+                <option value="feature_request">Feature Request</option>
+            </select></br></br>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <section id="contact-info">
+        <h2>Our Contact Information</h2>
+        <p>
+            <strong>Email:</strong> <a href="mailto:support@taskmaster.com">support@taskmaster.com</a><br>
+            <strong>Phone:</strong> 555-555-5555<br>
+            <strong>Address:</strong> 123 Main St, Anytown, USA 12345
+        </p>
+    </section>
+{% endblock %}

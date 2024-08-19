@@ -23,15 +23,15 @@
         }
 
         .logo {
-            display: inline-block;
-            margin-bottom: 20px;
-        }
+			display: inline-block;
+			margin-bottom: 20px;
+		}
 
-        .logo svg {
-            width: 40px;
-            height: 40px;
-            fill: #007bff;
-        }
+		.logo svg {
+			width: 40px;
+			height: 40px;
+			fill: #007bff;
+		}
 
         a {
           text-decoration: none;
@@ -83,7 +83,7 @@
             background-color: #fff;
             padding: 2em;
             margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(140, 227, 245, 1);
             width: 80%;
             max-width: 800px;
             height: auto;
@@ -131,14 +131,19 @@
         <nav>
             
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{% url "system:home"%}">Home</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <section>
-            <h1>Learn More About Our Task Management System</h1>
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2l3.59 7.59-1.41 1.41L12 10l-6.59 6.59L7 18.59l7.59-3.59-1.41-1.41z"/>
+                </svg> 
+                <h1>Learn More About Our Task Management System</h1>
+            </div>       
+            
             <p>Welcome to our task management system! Our goal is to help you streamline your workflow and increase productivity. Below, you'll find some key features and benefits to help you get started.</p>
         </section>
         <section>

@@ -2,17 +2,21 @@ from django.shortcuts import render, reverse
 from django.urls import reverse_lazy
 from system import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from system.forms import TaskForm, CommentForm, ProjectForm, TaskUpdateForm
+from system.forms import TaskForm, CommentForm, ProjectForm, TaskUpdateForm, ProjectUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from system.mixins import UserIsOwnerMixin
+from system.mixins import UserIsOwnerMixin, UserIsOwnerProjectMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
 
-def homepage(request):
-    return render(request, 'home.html')
+class HomepageView(TemplateView):
+    template_name = 'home.html'
 
-def learn_more(request):
-    return render(request, 'learn_more.html')
+class LearnMoreView(TemplateView):
+    template_name = 'learn_more.html'
+
+class ContactView(TemplateView):
+    template_name = 'contact.html'
 
 class ProjectListView(ListView):
     
@@ -20,7 +24,7 @@ class ProjectListView(ListView):
     context_object_name = 'projects'
     template_name = 'project_list.html'
 
-class ProjectDetailView(DeleteView):
+class ProjectDetailView(DetailView):
     
     model = models.Project
     context_object_name = 'project'
@@ -32,6 +36,19 @@ class ProjectCreateView(CreateView):
     template_name =  "project_form.html"
     form_class = ProjectForm
     success_url = reverse_lazy("system:project-create")
+    
+class ProjectUpdateView(LoginRequiredMixin,UserIsOwnerProjectMixin, UpdateView):
+    
+    model = models.Project
+    template_name = "project_update.html"
+    form_class = ProjectUpdateForm
+    success_url = reverse_lazy("system:project-list")
+    
+class ProjectDeleteView( LoginRequiredMixin, UserIsOwnerProjectMixin, DeleteView):
+    
+    model = models.Project
+    template_name = "project_delete.html"
+    success_url = reverse_lazy("system:project-list")
 
 class TaskListView(ListView):
     

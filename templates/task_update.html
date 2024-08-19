@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ task.title }}</h1>
-  
-    <form method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update">
-    </form>
+    <div class="container mt-3">
+        <h1>{{ task.title }}</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="alert alert-danger">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
