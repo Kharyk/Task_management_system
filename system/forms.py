@@ -15,7 +15,7 @@ class TaskForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date']
+        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date', "project"]
         
 class CommentForm(forms.ModelForm):
     
@@ -27,7 +27,7 @@ class ProjectForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'link', 'status', "user"]
+        fields = ['title', 'description', 'image', 'link', 'status', "members"]
         
 class ProjectUpdateForm(forms.ModelForm):
     
@@ -39,5 +39,5 @@ class TaskUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date']
+        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date', "project"]
         

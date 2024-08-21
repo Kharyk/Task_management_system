@@ -19,6 +19,28 @@
                                 <p class="mb-0">Priority:</p>
                                 <span class="badge text-bg-primary text-wrap" style="width: 5rem;">{{ task.priority }}</span>
                             </div>
+                            <div class="col-md-6">
+                            </br><p class="mb-0">Author:</p>
+                                <span class="badge text-bg-info text-wrap" style="width: 5rem;">{{ task.creator }}</span></br>
+                            </div>
+                            <div class="col-md-6">
+                            </br><p class="mb-0">In project:</p>
+                                {% if task.project %}
+                                    <a href="{% url 'system:project-detail' task.project.id %}">
+                                        <span class="badge text-bg-warning text-wrap" style="width: 5rem;">{{ task.project }}</span>
+                                        <br>
+                                    </a>
+                                {% else %}
+                                <span class="badge text-bg-secondary">Not in project</span>
+                                {% endif %}
+                            </div>
+                            <p class="mb-0">Comments:
+                                {% for comment in task.task.all %}
+                                    {{ comment.text }} (by {{ comment.commenters.username }})
+                                {% empty %}
+                                    No comments for this task.
+                                {% endfor %}
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="{% url "system:comments"%}" class="btn btn-sm btn-success">Add a comment</a>

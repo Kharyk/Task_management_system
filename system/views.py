@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignupForm
+from .models import Project
 
 class LoginView(View):
     template_name = 'login.html'
@@ -73,12 +74,31 @@ class ProjectDetailView(DetailView):
     context_object_name = 'project'
     template_name = 'project_detail.html'
     
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     
-    model = models.Task
+    model = Project
     template_name =  "project_form.html"
     form_class = ProjectForm
-    success_url = reverse_lazy("system:project-create")
+    success_url = reverse_lazy("system:project-list")
+    
+    def form_valid(self, form):
+        form.instance.creator_of_project = self.request.user
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.creator_of_project = request.user
+            project.save()
+            form.save_m2m()  
+            return redirect(self.success_url)  
+        else:
+            return render(request, self.template_name, {'form': form})
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
     
 class ProjectUpdateView(LoginRequiredMixin,UserIsOwnerProjectMixin, UpdateView):
     
@@ -110,7 +130,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = models.Task
     template_name =  "task_form.html"
     form_class = TaskForm
-    success_url = reverse_lazy("system:task-create")
+    success_url = reverse_lazy("system:task-list")
     
     def form_valid(self, form):
         
@@ -122,7 +142,8 @@ class TaskUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     model = models.Task
     template_name = "task_update.html"
     form_class = TaskUpdateForm
-    success_url = reverse_lazy("system:task-list")
+    def get_success_url(self):
+        return reverse_lazy("system:task-detail", args=[self.object.id])
     
     
 class TaskDeleteView( LoginRequiredMixin, UserIsOwnerMixin, DeleteView):

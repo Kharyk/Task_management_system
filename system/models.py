@@ -10,7 +10,8 @@ class Project(models.Model):
     ]
     
     title = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    creator_of_project = models.ForeignKey(User, on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name= 'member', blank=True)
 
     description = models.TextField()
     image = models.ImageField(upload_to='projects/', blank=True)
@@ -39,6 +40,7 @@ class Task(models.Model):
     
     title = models.CharField(max_length=256)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks_in_project",  blank=True, null=True)
 
     description = models.TextField()
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
@@ -48,7 +50,6 @@ class Task(models.Model):
     due_date = models.DateField(null=True, blank=True)
     time = models.DateTimeField(auto_now_add=True, null=True )
 
-    #auth
     
     def __str__(self):
         return self.title

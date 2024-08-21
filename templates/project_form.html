@@ -18,9 +18,11 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-sm btn-success">Save</button>
-                    </div>
+                    <form method="post" action="{% url 'system:task-list' %}">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        </div>
+                    </form>
                 </form>
             </div>
         </div>
