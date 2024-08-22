@@ -13,11 +13,21 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <p class="mb-0">Status:</p>
-                                <span class="badge text-bg-primary text-wrap" style="width: 5rem;">{{ task.status }}</span>
+                                <span style="width: 5rem;"
+                                    {% if task.status == 'To-Do' %} class="badge text-bg-warning" {% endif %}
+                                    {% if task.status == 'In Progress' %} class="badge text-bg-primary" {% endif %}
+                                    {% if task.status == 'Done' %} class="badge text-bg-success" {% endif %}
+                                    {% if task.status == 'Ideas' %} class="badge text-bg-info" {% endif %}
+                                    >{{ task.status }}</span>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-0">Priority:</p>
-                                <span class="badge text-bg-primary text-wrap" style="width: 5rem;">{{ task.priority }}</span>
+                                <span style="width: 5rem;"
+                                    {% if task.priority == 'Low' %} class="badge text-bg-info" {% endif %}
+                                    {% if task.priority == 'Medium' %} class="badge text-bg-success" {% endif %}
+                                    {% if task.priority == 'High' %} class="badge text-bg-warning" {% endif %}
+                                    {% if task.priority == 'God Dammit' %} class="badge text-bg-danger" {% endif %}
+                                    >{{ task.priority }}</span>
                             </div>
                             <div class="col-md-6">
                             </br><p class="mb-0">Author:</p>
@@ -34,21 +44,40 @@
                                 <span class="badge text-bg-secondary">Not in project</span>
                                 {% endif %}
                             </div>
-                            <p class="mb-0">Comments:
-                                {% for comment in task.task.all %}
-                                    {{ comment.text }} (by {{ comment.commenters.username }})
-                                {% empty %}
-                                    No comments for this task.
-                                {% endfor %}
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url "system:comments"%}" class="btn btn-sm btn-success">Add a comment</a>
-                            <div class="btn-group">
-                                <a href="{% url "system:task-update" task.id%}" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="{% url "system:task-delete" task.id%}" class="btn btn-sm btn-danger">Delete</a>
+                            </br>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <a href="{% url "system:task-update" task.id%}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{% url "system:task-delete" task.id%}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm" style="padding: 20px; overflow-y: auto; max-height: 300px; border: 1px solid #ddd; border-radius: 10px;">
+                    <div class="card-header bg-white">
+                        <h2 class="mb-0">Comments</h2>
+                    </div>
+                    <div class="card-body">
+                        <div style="padding: 20px;">
+                            {% for comment in task.task.all %}
+                                <div style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ddd;">
+                                    <p class="mb-0">{{ comment.text }}</p>
+                                    <small style="color: #666; font-size: 12px;">by {{ comment.commenters.username }}</small>
+                                </div>
+                            {% empty %}
+                                <p>No comments for this task.</p>
+                            {% endfor %}
+                        </div>
+                        <form action="{% url "system:comments" task.id%}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group mb-3" style="padding: 10px;">
+                                <input type="text" class="form-control" name="text" placeholder="Add a comment...">
+                                <button class="btn btn-sm btn-success" type="submit">Send</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ class CommentForm(forms.ModelForm):
     
     class Meta:
         model = Comment
-        fields = ['text',"task", "commenters"]
+        fields = ['text']
         
 class ProjectForm(forms.ModelForm):
     
@@ -33,7 +33,7 @@ class ProjectUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'link', 'status']
+        fields = ['title', 'description', 'image', 'link', 'status',  "members"]
         
 class TaskUpdateForm(forms.ModelForm):
     

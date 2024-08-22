@@ -14,7 +14,12 @@
                 <div>
                     <a href="{% url "system:task-detail" task.pk%}" type="button" class="btn btn-light">{{ task.title }}</a> 
                     <span class="badge text-bg-primary">{{ task.status }}</span>
-                    <span class="badge text-bg-secondary">{{ task.priority }}</span>
+                    <span style="width: 5rem;"
+                        {% if task.priority == 'Low' %} class="badge text-bg-info" {% endif %}
+                        {% if task.priority == 'Medium' %} class="badge text-bg-success" {% endif %}
+                        {% if task.priority == 'High' %} class="badge text-bg-warning" {% endif %}
+                        {% if task.priority == 'God Dammit' %} class="badge text-bg-danger" {% endif %}
+                    >{{ task.priority }}</span>
                 </div>
             
                 {% csrf_token %}

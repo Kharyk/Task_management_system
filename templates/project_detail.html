@@ -25,59 +25,61 @@
                 <span class="badge text-bg-info">No members</span>
             {% endfor %}
         </p>
-
-        <h5 class="mb-0">Tasks:</h5>
-        <div class="row">
-            <div class="col">
-                <h6>Low </h6>
-                {% for task in project.tasks_in_project.all %}
-                    {% if task.priority == "Low" %}
-                        <a href="{% url 'system:task-detail' task.id %}">
-                            <span class="badge text-bg-primary">{{ task.title }}</span>
-                        </a>
-                    {% endif %}
-                {% empty %}
-                    <span class="badge text-bg-secondary">No low priority tasks for this project.</span>
-                {% endfor %}
-            </div>
-            <div class="col">
-                <h6>Medium </h6>
-                {% for task in project.tasks_in_project.all %}
-                    {% if task.priority == "Medium" %}
-                        <a href="{% url 'system:task-detail' task.id %}">
-                            <span class="badge text-bg-primary">{{ task.title }}</span>
-                        </a>
-                    {% endif %}
-                {% empty %}
-                    <span class="badge text-bg-secondary">No medium priority tasks for this project.</span>
-                {% endfor %}
-            </div>
-            <div class="col">
-                <h6>High </h6>
-                {% for task in project.tasks_in_project.all %}
-                    {% if task.priority == "High" %}
-                        <a href="{% url 'system:task-detail' task.id %}">
-                            <span class="badge text-bg-primary">{{ task.title }}</span>
-                        </a>
-                    {% endif %}
-                {% empty %}
-                    <span class="badge text-bg-secondary">No high priority tasks for this project.</span>
-                {% endfor %}
-            </div>
-            <div class="col">
-                <h6>God Dammit </h6>
-                {% for task in project.tasks_in_project.all %}
-                    {% if task.priority == "God Dammit" %}
-                        <a href="{% url 'system:task-detail' task.id %}">
-                            <span class="badge text-bg-primary">{{ task.title }}</span>
-                        </a>
-                    {% endif %}
-                {% empty %}
-                    <span class="badge text-bg-secondary">No God Dammit priority tasks for this project.</span>
-                {% endfor %}
+        <div class="container mt-5">
+            
+            <h5 class="mb-0">Tasks:</h5></br>
+            <div class="row">
+                <div class="col">
+                    <h6>To-Do </h6>
+                    {% for task in project.tasks_in_project.all %}
+                        {% if task.status == "To-Do" %}
+                            <a href="{% url 'system:task-detail' task.id %}">
+                                <span class="badge text-bg-primary">{{ task.title }}</span></br>
+                            </a>
+                        {% endif %}
+                    {% empty %}
+                        <span class="badge text-bg-secondary">No low status tasks for this project.</span>
+                    {% endfor %}
+                </div>
+                <div class="col">
+                    <h6>In Progress </h6>
+                    {% for task in project.tasks_in_project.all %}
+                        {% if task.status == "In Progress" %}
+                            <a href="{% url 'system:task-detail' task.id %}">
+                                <span class="badge text-bg-primary">{{ task.title }}</span></br>
+                            </a>
+                        {% endif %}
+                    {% empty %}
+                        <span class="badge text-bg-secondary">No medium status tasks for this project.</span>
+                    {% endfor %}
+                </div>
+                <div class="col">
+                    <h6>Done </h6>
+                    {% for task in project.tasks_in_project.all %}
+                        {% if task.status == "Done" %}
+                            <a href="{% url 'system:task-detail' task.id %}">
+                                <span class="badge text-bg-primary">{{ task.title }}</span></br>
+                            </a>
+                        {% endif %}
+                    {% empty %}
+                        <span class="badge text-bg-secondary">No high status tasks for this project.</span>
+                    {% endfor %}
+                </div>
+                <div class="col">
+                    <h6>Ideas </h6>
+                    {% for task in project.tasks_in_project.all %}
+                        {% if task.status == "Ideas" %}
+                            <a href="{% url 'system:task-detail' task.id %}">
+                                <span class="badge text-bg-primary">{{ task.title }}</span></br>
+                            </a>
+                        {% endif %}
+                    {% empty %}
+                        <span class="badge text-bg-secondary">No high status tasks for this project.</span>
+                    {% endfor %}
+                </div>
+                
             </div>
         </div>
-
 
         <br/>
         <br/>

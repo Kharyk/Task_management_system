@@ -59,16 +59,24 @@ class HomepageView(TemplateView):
 class LearnMoreView(TemplateView):
     template_name = 'learn_more.html'
 
-class ContactView(TemplateView):
+class ContactView(LoginRequiredMixin, TemplateView):
     template_name = 'contact.html'
 
-class ProjectListView(ListView):
+class ProjectListView(LoginRequiredMixin, ListView):
     
     model = models.Project
     context_object_name = 'projects'
     template_name = 'project_list.html'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        creator_of_project = self.request.user
+        if creator_of_project:
+            queryset = queryset.filter(creator_of_project__username=creator_of_project)
+            
+        return queryset
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     
     model = models.Project
     context_object_name = 'project'
@@ -113,13 +121,21 @@ class ProjectDeleteView( LoginRequiredMixin, UserIsOwnerProjectMixin, DeleteView
     template_name = "project_delete.html"
     success_url = reverse_lazy("system:project-list")
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, ListView):
     
     model = models.Task
     context_object_name = "tasks"
     template_name = "task_list.html"
     
-class TaskDetailView(DetailView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        creator = self.request.user
+        if creator:
+            queryset = queryset.filter(creator__username=creator)
+            
+        return queryset
+    
+class TaskDetailView(LoginRequiredMixin, DetailView):
     
     model = models.Task
     context_object_name = "task"
@@ -137,6 +153,8 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         form.instance.creator = self.request.user
         return super().form_valid(form)
     
+    
+    
 class TaskUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     
     model = models.Task
@@ -153,12 +171,25 @@ class TaskDeleteView( LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
     success_url = reverse_lazy("system:task-list")
     
     
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, CreateView):
     
     model = models.Comment
     template_name = "comment.html"
     form_class = CommentForm
-    success_url = reverse_lazy("system:comments")
+    
+    def form_valid(self, form):
+
+        form.instance.commenters = self.request.user
+        form.instance.task_id = self.kwargs['pk'] 
+        return super().form_valid(form)
+
+    def get_queryset(self):
+
+        task_id = self.kwargs['pk']
+        return Comment.objects.filter(task_id=task_id)
+
+    def get_success_url(self):
+        return reverse_lazy("system:task-detail", kwargs={'pk': self.kwargs['pk']})
     
 """ def form_valid(self, form):
         form.instance.task_id = self.kwargs['pk']
