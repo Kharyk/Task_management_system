@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, redirect
 from django.urls import reverse_lazy
 from system import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.contrib.auth.views import LogoutView
 from system.forms import TaskForm, CommentForm, ProjectForm, TaskUpdateForm, ProjectUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from system.mixins import UserIsOwnerMixin, UserIsOwnerProjectMixin
@@ -34,6 +35,12 @@ class LoginView(View):
                 form.add_error(None, 'Invalid username or password')
         return render(request, self.template_name, {'form': form})
 
+
+class CustomLogoutView(LogoutView):
+
+    def get(self, request):
+        return super().get(request)
+
 class SignupView(View):
     template_name = 'signup.html'
     form_class = SignupForm
@@ -65,16 +72,14 @@ class ContactView(LoginRequiredMixin, TemplateView):
 class ProjectListView(LoginRequiredMixin, ListView):
     
     model = models.Project
-    context_object_name = 'projects'
     template_name = 'project_list.html'
     
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        creator_of_project = self.request.user
-        if creator_of_project:
-            queryset = queryset.filter(creator_of_project__username=creator_of_project)
-            
-        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['my_projects'] = models.Project.objects.filter(creator_of_project=user)
+        context['member_projects'] = models.Project.objects.filter(members=user).exclude(creator_of_project=user)
+        return context
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     

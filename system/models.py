@@ -14,7 +14,7 @@ class Project(models.Model):
     members = models.ManyToManyField(User, related_name= 'member', blank=True)
 
     description = models.TextField()
-    image = models.ImageField(upload_to='static/img/projects/', blank=True)
+    image = models.ImageField(upload_to='static/projects/', blank=True)
     link = models.URLField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -46,7 +46,7 @@ class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="tasks_in_project",  blank=True, null=True)
 
     description = models.TextField()
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    image = models.ImageField(upload_to='static/projects/', blank=True, null=True)
     link = models.URLField(max_length=200, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="todo")
     priority = models.CharField(max_length=20, choices= PRIORITY_CHOICES, default="medium")

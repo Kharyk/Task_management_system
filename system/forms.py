@@ -11,6 +11,7 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email')
+        
 class TaskForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
