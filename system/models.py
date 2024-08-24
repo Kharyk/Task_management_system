@@ -14,11 +14,14 @@ class Project(models.Model):
     members = models.ManyToManyField(User, related_name= 'member', blank=True)
 
     description = models.TextField()
-    image = models.ImageField(upload_to='projects/', blank=True)
+    image = models.ImageField(upload_to='static/img/projects/', blank=True)
     link = models.URLField(max_length=200, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES_P, default='active')
+    
+    def __str__(self):
+        return self.title
     
     
 

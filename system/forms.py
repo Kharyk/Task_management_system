@@ -13,6 +13,12 @@ class SignupForm(UserCreationForm):
         fields = ('username', 'email')
 class TaskForm(forms.ModelForm):
     
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['project'].queryset = Project.objects.filter(creator_of_project=user)
+    
     class Meta:
         model = Task
         fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date', "project"]
@@ -36,6 +42,12 @@ class ProjectUpdateForm(forms.ModelForm):
         fields = ['title', 'description', 'image', 'link', 'status',  "members"]
         
 class TaskUpdateForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['project'].queryset = Project.objects.filter(creator_of_project=user)
     
     class Meta:
         model = Task

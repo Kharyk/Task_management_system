@@ -37,7 +37,7 @@
                             </br><p class="mb-0">In project:</p>
                                 {% if task.project %}
                                     <a href="{% url 'system:project-detail' task.project.id %}">
-                                        <span class="badge text-bg-warning text-wrap" style="width: 5rem;">{{ task.project }}</span>
+                                        <span class="badge text-bg-warning text-wrap" style="width: 5rem;">{{ task.project.title }}</span>
                                         <br>
                                     </a>
                                 {% else %}

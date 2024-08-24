@@ -156,9 +156,40 @@
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
-    <footer>
-        <p>&copy; 2024 Task Management System</p>
-    </footer>
+    <footer class="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4 col-sm-6">
+                  <h4>About Us</h4>
+                  <p>2024 Task Management System is a powerful tool designed to help teams and individuals manage their tasks and projects efficiently. Our system is built with the latest technology and is constantly evolving to meet the changing needs of our users.</p>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                  <h4>Quick Links</h4>
+                  <ul>
+                      <li><a href="{% url "system:project-list" %}" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Projects</a></li>
+                      <li><a href="{% url "system:task-list" %}" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Tasks</a></li>
+                      <li><a href="{% url "system:contact" %}" class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Contact Us</a></li>
+
+                      {%comment%}<li><a href="#">Reports</a></li>
+                      <li><a href="#">Settings</a></li>{%endcomment%}
+                  </ul>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <h4>Short Message</h4>
+                <p><span>Thanks for choosing us!</span>
+                    <br>
+                    We hope you're loving the way you organize your tasks now!</p>
+            </div>
+              
+          </div>
+          <hr>
+          <div class="row">
+              <div class="col-md-12">
+                  <p class="text-center">&copy; 2024 Task Management System. All rights reserved.</p>
+              </div>
+          </div>
+      </div>
+  </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
