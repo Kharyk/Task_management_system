@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container mt-5">
@@ -66,10 +67,18 @@
                     <div class="card-body">
                         <div style="padding: 20px;">
                             {% for comment in task.task.all %}
-                                <div style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ddd;">
-                                    <p class="mb-0">{{ comment.text }}</p>
-                                    <small style="color: #666; font-size: 12px;">by {{ comment.commenters.username }}</small>
+                            <div class="comment-container" style="margin-bottom: 20px; padding: 2px; border-bottom: 1px solid #ddd;">
+                                <p class="comment-text mb-0">{{ comment.text }}</p>
+                                <p><small style="color: #666; font-size: 12px;">by {{ comment.commenters.username }}</small></p>
+                                <div class="comment-actions" style="display: none;">
+                                    <a href="{% url "system:comment-edit" comment.id%}" class="btn btn-sm btn-outline-warning edit-btn">Modify</a>
+
+                                    <form action="{% url "system:comment-delete" comment.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
+                                    </form>
                                 </div>
+                            </div>
                             {% empty %}
                                 <p>No comments for this task.</p>
                             {% endfor %}
@@ -86,4 +95,6 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{% static 'js/comment.js' %}"></script>
 {% endblock %}

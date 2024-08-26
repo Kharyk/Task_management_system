@@ -3,9 +3,9 @@ from django.urls import reverse_lazy
 from system import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.views import LogoutView
-from system.forms import TaskForm, CommentForm, ProjectForm, TaskUpdateForm, ProjectUpdateForm
+from system.forms import TaskForm, CommentForm, ProjectForm, TaskUpdateForm, ProjectUpdateForm, CommentUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from system.mixins import UserIsOwnerMixin, UserIsOwnerProjectMixin
+from system.mixins import UserIsOwnerMixin, UserIsOwnerProjectMixin, UserIsOwnerCommentMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
@@ -13,6 +13,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignupForm
 from .models import Project
+
 
 class LoginView(View):
     template_name = 'login.html'
@@ -190,7 +191,6 @@ class TaskDeleteView( LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
 class CommentCreateView(LoginRequiredMixin, CreateView):
     
     model = models.Comment
-    template_name = "comment.html"
     form_class = CommentForm
     
     def form_valid(self, form):
@@ -206,6 +206,20 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("system:task-detail", kwargs={'pk': self.kwargs['pk']})
+    
+class CommentUpdateView(LoginRequiredMixin, UserIsOwnerCommentMixin, UpdateView):
+    model = models.Comment
+    template_name = "comment_edit.html"
+    form_class = CommentUpdateForm
+    
+    def get_success_url(self):
+        return reverse_lazy("system:task-detail", kwargs={'pk': self.object.task.id})
+
+class CommentDeleteView(LoginRequiredMixin, UserIsOwnerCommentMixin, DeleteView):
+    model = models.Comment
+    
+    def get_success_url(self):
+        return reverse_lazy("system:task-detail", kwargs={'pk': self.object.task.id})
     
 """ def form_valid(self, form):
         form.instance.task_id = self.kwargs['pk']

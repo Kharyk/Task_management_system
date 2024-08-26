@@ -30,6 +30,18 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         
+class CommentUpdateForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        commenters = kwargs.pop('commenters', None)
+        super().__init__(*args, **kwargs)
+        if commenters:
+            self.fields['project'].queryset = Project.objects.filter(commenters=commenters)
+    
+    class Meta:
+        model = Comment
+        fields = ['text']
+
 class ProjectForm(forms.ModelForm):
     
     class Meta:
@@ -40,7 +52,7 @@ class ProjectUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'link', 'status',  "members"]
+        fields = ['title', 'description', 'image', 'link', 'status', "members"]
         
 class TaskUpdateForm(forms.ModelForm):
     

@@ -17,3 +17,12 @@ class UserIsOwnerProjectMixin(object):
             raise PermissionDenied
         
         return super().dispatch(request, *args, **kwargs)
+    
+class UserIsOwnerCommentMixin(object):
+    
+    def dispatch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.commenters != self.request.user:
+            raise PermissionDenied
+        
+        return super().dispatch(request, *args, **kwargs)

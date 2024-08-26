@@ -19,6 +19,9 @@ urlpatterns = [
     path('<int:pk>/update/project', views.ProjectUpdateView.as_view(), name= 'project-update'),
     path('<int:pk>/delete/task', views.TaskDeleteView.as_view(), name= 'task-delete'), 
     path('<int:pk>/delete.project', views.ProjectDeleteView.as_view(), name= 'project-delete'),
+    path('<int:pk>/edit/comment', views.CommentUpdateView.as_view(), name='comment-edit'), 
+    path('<int:pk>/delete.comment', views.CommentDeleteView.as_view(), name= 'comment-delete'),
+    
 
 
     #path("<int:pk>/complete/", views.TaskCompleteView.as_view(), name= "task-complete")
