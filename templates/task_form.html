@@ -7,7 +7,7 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="form-group">
@@ -18,7 +18,7 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    <form method="post" action="{% url 'system:task-list' %}">
+                    <form method="post" action="{% url 'system:task-list' %}" >
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-sm btn-success">Save</button>
                         </div>

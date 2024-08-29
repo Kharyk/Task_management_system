@@ -7,11 +7,18 @@
         <p>Description: {{ project.description }}</p>
 
         {% if project.image %}
-            <img src="{{ project.image.url }}" alt="Project image">
+            <div class="image-container">
+
+                <img src="{{ project.image.url }}" alt="Project image" class='image'>
+            </div>
         {% endif %}
 
         {% if project.link %}
             <p>Link: <a href="{{ project.link }}" target="_blank">{{ project.link }}</a></p>
+        {% endif %}
+
+        {% if project.files %}
+            <p>Files: <a href="{{ project.files }}" target="_blank">{{ project.files }}</a></p>
         {% endif %}
 
         <p>Created at: <span class="badge text-bg-success">{{ project.created_at }}</span></p>

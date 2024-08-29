@@ -5,25 +5,29 @@
     <div class="container mt-3">
         <h2>Create new</h2>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in form %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="alert alert-danger">{{ field.errors }}</div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                    <form method="post" action="{% url 'system:task-list' %}">
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-success">Save</button>
-                        </div>
+        <div class="container mt-3">
+            <h2>Create new</h2>
+    
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <form method="post" action="{% url 'system:task-list' %}" >
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            </div>
+                        </form>
                     </form>
-                </form>
+                </div>
             </div>
         </div>
     </div>

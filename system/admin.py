@@ -2,7 +2,7 @@ from django.contrib import admin
 from system.models import Task, Comment, Project, User
 
 class ProjectAdmin(admin.ModelAdmin):
-    fields = ('title', 'creator_of_project', 'members', 'description', 'image', 'link', 'status')
+    fields = ('title', 'creator_of_project', 'members', 'description', 'image',  "files" , 'link', 'status')
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "members":

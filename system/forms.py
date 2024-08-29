@@ -22,7 +22,11 @@ class TaskForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date', "project"]
+        fields = ['title', 'description', 'status', 'priority', 'image', 'files', 'link', 'due_date', "project"]
+        
+        widgets = {
+            "media": forms.FileInput()
+        }
         
 class CommentForm(forms.ModelForm):
     
@@ -46,13 +50,17 @@ class ProjectForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'link', 'status', "members"]
+        fields = ['title', 'description', 'image', 'files', 'link', 'status', "members"]
+        
+        widgets = {
+            "media": forms.FileInput()
+        }
         
 class ProjectUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image', 'link', 'status', "members"]
+        fields = ['title', 'description', 'image', 'link','files', 'status', "members"]
         
 class TaskUpdateForm(forms.ModelForm):
     
@@ -64,5 +72,5 @@ class TaskUpdateForm(forms.ModelForm):
     
     class Meta:
         model = Task
-        fields = ['title', 'description', 'status', 'priority', 'image', 'link', 'due_date', "project"]
+        fields = ['title', 'description', 'status', 'priority', 'image', 'link','files', 'due_date', "project"]
         

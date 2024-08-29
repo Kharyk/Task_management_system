@@ -11,8 +11,16 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted">{{ task.description }}</p>
-                        <p class="text-muted">{{ task.image }}</p>
                         <p class="text-muted">Deadline: {{ task.due_date }}</p>
+                        <div class="image-container">
+                            {% if task.image %}
+                                <img src="{{ task.image.url }}" alt="Task image" class='image'>
+                            {% endif %}
+                        </div>
+
+                    {% if task.files %}
+                        <p>Files: <a href="{{ task.files }}" target="_blank">{{ task.files }}</a></p>
+                    {% endif %}
 
                         <div class="row mb-3">
                             <div class="col-md-6">
