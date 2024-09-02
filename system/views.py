@@ -12,7 +12,9 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignupForm
-from .models import Project
+from .models import Project, Task
+from datetime import datetime
+
 
 
 class LoginView(View):
@@ -127,20 +129,27 @@ class ProjectDeleteView( LoginRequiredMixin, UserIsOwnerProjectMixin, DeleteView
     template_name = "project_delete.html"
     success_url = reverse_lazy("system:project-list")
 
+
 class TaskListView(LoginRequiredMixin, ListView):
-    
-    model = models.Task
+    model = Task
     context_object_name = "tasks"
     template_name = "task_list.html"
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         creator = self.request.user
         if creator:
             queryset = queryset.filter(creator__username=creator)
             
+        if self.request.GET.get('filter_by_deadline'):
+            queryset = queryset.filter(due_date__gte=datetime.today()).order_by('due_date')
+        
+        if self.request.GET.get('filter_overdue'):
+            queryset = queryset.filter(due_date__lte=datetime.today())
+        
         return queryset
-    
+
+
 class TaskDetailView(LoginRequiredMixin, DetailView):
     
     model = models.Task
