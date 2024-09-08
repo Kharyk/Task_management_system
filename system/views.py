@@ -14,8 +14,29 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm, SignupForm
 from .models import Project, Task
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.utils.decorators import method_decorator
 
-
+class SearchResultsView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        query = request.GET.get('q')
+        if query:
+            tasks = Task.objects.filter(
+                Q(title__icontains=query) | 
+                Q(description__icontains=query) | 
+                Q(creator__username__icontains=query)
+            ).filter(Q(creator=request.user) | Q(project__members=request.user))
+            projects = Project.objects.filter(
+                Q(title__icontains=query) | 
+                Q(description__icontains=query) | 
+                Q(creator_of_project__username__icontains=query)
+            ).filter(Q(creator_of_project=request.user) | Q(members=request.user))
+        else:
+            tasks = Task.objects.none()
+            projects = Project.objects.none()
+        return render(request, 'search_results.html', {'tasks': tasks, 'projects': projects, 'query': query})
 
 class LoginView(View):
     template_name = 'login.html'

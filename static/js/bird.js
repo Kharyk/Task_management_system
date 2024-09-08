@@ -1,5 +1,5 @@
 const birdContainer = document.getElementById('bird-container');
-const birdImage = '../img/bird2.webp'; 
+const birdImage = '/static/img/bird2.webp'; 
 
 let birdX = 0; //  x-coordinate
 let birdY = 10; //  y-coordinate

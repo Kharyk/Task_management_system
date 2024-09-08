@@ -21,6 +21,7 @@ urlpatterns = [
     path('<int:pk>/delete.project', views.ProjectDeleteView.as_view(), name= 'project-delete'),
     path('<int:pk>/edit/comment', views.CommentUpdateView.as_view(), name='comment-edit'), 
     path('<int:pk>/delete.comment', views.CommentDeleteView.as_view(), name= 'comment-delete'),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
     
 
 

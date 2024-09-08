@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h1>Search Results</h1>
+                        <p>Search query: {{ query }}</p>
+                    </div>
+                    <div class="card-body">
+                        <h2>Tasks:</h2>
+                        <ul>
+                            {% for task in tasks %}
+                            <a href="{% url "system:task-detail" task.pk%}" type="button" class="btn btn-outline-primary">{{ task.title }} ({{ task.creator.username }})</a> 
+                            {% empty %}
+                            <li>No tasks found.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                    <h2>Projects:</h2>
+                        <ul>
+                            {% for project in projects %}
+                            <a href="{% url "system:project-detail" project.pk%}" type="button" class="btn btn-outline-primary">{{ project.title }} ({{ project.creator_of_project.username }})</a> 
+                            
+                            {% empty %}
+                            <li>No projects found.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -3,6 +3,9 @@ from system.models import Task, Comment, Project
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+class SearchForm(forms.Form):
+    q = forms.CharField(label='Search', max_length=100)
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=255, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
