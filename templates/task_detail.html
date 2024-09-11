@@ -59,8 +59,11 @@
                             </br>
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
-                                    <a href="{% url "system:task-update" task.id%}" class="btn btn-sm btn-warning">Edit</a>
-                                    <a href="{% url "system:task-delete" task.id%}" class="btn btn-sm btn-danger">Delete</a>
+                                    {% if request.user == task.creator %}
+
+                                        <a href="{% url "system:task-update" task.id%}" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="{% url "system:task-delete" task.id%}" class="btn btn-sm btn-danger">Delete</a>
+                                    {%endif%}
                                 </div>
                             </div>
                         </div>
@@ -79,12 +82,17 @@
                                 <p class="comment-text mb-0">{{ comment.text }}</p>
                                 <p><small style="color: #666; font-size: 12px;">by {{ comment.commenters.username }}</small></p>
                                 <div class="comment-actions" style="display: none;">
-                                    <a href="{% url "system:comment-edit" comment.id%}" class="btn btn-sm btn-outline-warning edit-btn">Modify</a>
-
-                                    <form action="{% url "system:comment-delete" comment.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
-                                    </form>
+                                    {% if request.user == comment.commenters or request.user == task.creator %}
+                                        {% if request.user == comment.commenters %}
+                                            <a href="{% url "system:comment-edit" comment.id%}" class="btn btn-sm btn-outline-warning edit-btn">Modify</a>
+                                        {% endif %}
+                                        {% if request.user == task.creator or request.user == comment.commenters %}
+                                            <form action="{% url "system:comment-delete" comment.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button class="btn btn-sm btn-outline-danger delete-btn">Delete</button>
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                             </div>
                             {% empty %}

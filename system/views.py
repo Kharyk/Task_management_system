@@ -166,7 +166,7 @@ class TaskListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(due_date__gte=datetime.today()).order_by('due_date')
         
         if self.request.GET.get('filter_overdue'):
-            queryset = queryset.filter(due_date__lte=datetime.today())
+            queryset = queryset.filter(due_date__lte=datetime.today()).exclude(status="Done")
         
         return queryset
 
